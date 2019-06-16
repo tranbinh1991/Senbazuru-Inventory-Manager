@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <title>Adding new material to inventory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Add new raw material!</h1>
+        <div th:text="${successMessage}"></div>
+        <form th:action="@{/rawmaterialadder}" th:object="${RawMaterialCreationFormData}" method="POST">
+            <table>
+                <tr>
+                    <td>
+                        Name of raw material:   
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{name}" id="name"  required/><br/>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>                        
+                        Purchase price: 
+                    </td>
+                    <td>
+                        <input type="number" th:field="*{purchasePrice}" id="purchasePrice" min="0" max="1000000" required/><br/>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Total stock:    
+                    </td>
+                    <td>
+                        <input type="number" th:field="*{totalStock}" id="totalStock" min="0" max="1000000" required/><br/>
+                    </td>
+                    <td>
+                       <span th:if="${#fields.hasErrors('totalStock')}" th:errors="*{totalStock}"></span>
+                    </td>
+                </tr>
+                
+            </table>
+            
+            <input type="submit" value="Submit" id="sendRawMaterialCreationForm"/>
+        </form>
+        <a href="/">Back</a>
+    </body>
+</html>

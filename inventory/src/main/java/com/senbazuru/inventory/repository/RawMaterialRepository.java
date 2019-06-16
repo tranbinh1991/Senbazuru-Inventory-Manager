@@ -21,5 +21,6 @@ import org.springframework.stereotype.Repository;
 public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>{
     
     List<RawMaterial> findByName(String name);
+    List<RawMaterial> findAll();
     
 }
