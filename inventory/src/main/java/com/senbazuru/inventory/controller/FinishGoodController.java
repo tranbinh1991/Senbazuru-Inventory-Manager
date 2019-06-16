@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Binh
  */
 @Controller
-public class MainPageController {
+public class FinishGoodController {
     
+    @Autowired
+    private FinishedGoodService finishedGoodService;
 
-
-    @RequestMapping("/")
+    @RequestMapping("/finishedgood")
     public String index(Model model) {
-        return "index.html";
+        model.addAttribute("finishedGoodList", finishedGoodService.findAll());
+        
+        return "finishedgood.html";
     }
 }
 

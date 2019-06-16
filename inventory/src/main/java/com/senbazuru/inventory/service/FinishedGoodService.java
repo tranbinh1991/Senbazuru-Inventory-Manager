@@ -30,6 +30,10 @@ public class FinishedGoodService {
         return finishedGoodRepository.findByName(name);
     }
     
+    public List<FinishedGood> findAll(){
+        return finishedGoodRepository.findAll();
+    }
+    
     
             
     

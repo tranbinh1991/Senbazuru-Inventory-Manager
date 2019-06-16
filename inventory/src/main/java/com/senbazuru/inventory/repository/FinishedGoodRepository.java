@@ -18,5 +18,5 @@ import org.springframework.stereotype.Repository;
 public interface FinishedGoodRepository extends JpaRepository<FinishedGood, Long>{
     
     List<FinishedGood> findByName(String name);
-    
+    List<FinishedGood> findAll();   
 }

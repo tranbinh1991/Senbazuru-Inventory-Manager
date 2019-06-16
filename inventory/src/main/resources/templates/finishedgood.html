@@ -6,12 +6,15 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Senbazuru</title>
+        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
-       <h1>Senbazuru Inventory Manager</h1>        
-        <a href="/finishedgood">Display finished Goods</a> <br/>
+    <body th:each="finishGood : ${finishedGoodList}">
+        
+        <div th:text="${finishGood.id}"></div>
+        <div th:text="${finishGood.name}"></div>
+       
+       
     </body>
 </html>
