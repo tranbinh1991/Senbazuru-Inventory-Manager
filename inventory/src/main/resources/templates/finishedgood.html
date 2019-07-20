@@ -11,10 +11,24 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body th:each="finishGood : ${finishedGoodList}">
-        
+
         <div th:text="${finishGood.id}"></div>
         <div th:text="${finishGood.name}"></div>
-       
-       
-    </body>
+        <div th:text="${finishGood.cookable}"></div>
+
+    <tr>
+        <td>Kategória: </td>       
+        <td th:each="finishedGoodCategory : ${finishGood.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
+    
+    </tr>
+
+    <div th:each="map : ${finishGood.itemQuantityMap}">
+     <div th:each="mapEntry : ${map}">
+         <span th:text="${mapEntry.key}"></span> = 
+         <span th:text="${mapEntry.value}"></span> 
+     </div>
+</div>
+
+
+</body>
 </html>

@@ -6,12 +6,22 @@
 package com.senbazuru.inventory.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,14 +38,11 @@ public class FinishedGood {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
+
     private Integer totalStock;
     private String name;
-    private Boolean cookable; 
+    private Boolean cookable;
 
-    @OneToMany
-    private List<RawMaterial> rawMaterialList;
-    
 
     @OneToMany(mappedBy = "finishedGood")
     private List<FinishedGoodAcquisition> finishedGoodAcquisitionList;
@@ -45,6 +52,16 @@ public class FinishedGood {
 
     private BigDecimal sellingPrice;
     private BigDecimal purchasePrice;
-    private FinishedGoodCategory finishedGoodCategory;
+
+    @ManyToMany(mappedBy = "finishedGoodList")
+    private List<FinishedGoodCategory> finishedGoodCategory;
+
+    @ElementCollection
+    @CollectionTable(name = "rawmaterial_quantity",
+            joinColumns = {
+                @JoinColumn(name = "finished_good_id")})
+    @MapKeyColumn(name = "rawmaterial")
+    @Column(name = "quantity")
+    private Map<RawMaterial, Integer> itemQuantityMap;
 
 }

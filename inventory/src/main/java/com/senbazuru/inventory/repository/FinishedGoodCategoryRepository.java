@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 public interface FinishedGoodCategoryRepository extends JpaRepository<FinishedGoodCategory, Long>{
     
     public List<FinishedGoodCategory> findByCategory(Category category);
+    public List<FinishedGoodCategory> findAll();
     
     
 }

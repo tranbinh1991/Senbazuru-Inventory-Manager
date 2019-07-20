@@ -49,8 +49,8 @@ public class FinishedGoodCategory implements Serializable {
     private Category category;
 
 //    @JoinTable(name = "movieCategory_movie",
-//            joinColumns = @JoinColumn(name = "movieCategory_id"),
-//            inverseJoinColumns = @JoinColumn(name = "movie_id")
+//            joinColumns = @JoinColumn(name = "finishedGoodCategory_id"),
+//            inverseJoinColumns = @JoinColumn(name = "finishedgood_id")
 //    )
     @ManyToMany(cascade = {
         CascadeType.PERSIST,

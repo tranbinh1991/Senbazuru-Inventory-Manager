@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <title>Adding finished good to inventory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Add Finished Good!</h1>
+        <div th:text="${successMessage}"></div>
+        <form th:action="@{/finishedgoodadder}" th:object="${FinishedGoodCreationFormData}" method="POST">
+
+
+
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("cookable");
+                    var l = x.selectedIndex;
+                    if (l === 0) {
+                        var y = document.getElementById("purchasePrice")
+                        var z = document.getElementById("totalStock")
+                        var raw1 = document.getElementById("rawMaterial1")
+                        var raw2 = document.getElementById("rawMaterial2")
+                        var raw3 = document.getElementById("rawMaterial3")
+                        var raw4 = document.getElementById("rawMaterial4")
+                        var raw5 = document.getElementById("rawMaterial5")
+                        var raw6 = document.getElementById("rawMaterial6")
+                        var raw7 = document.getElementById("rawMaterial7")
+                        raw1.style.display = "none";
+
+                        raw2.style.display = "none";
+                        raw3.style.display = "none";
+                        raw4.style.display = "none";
+                        raw5.style.display = "none";
+                        raw6.style.display = "none";
+                        raw7.style.display = "none";
+
+
+                        y.style.display = "block";
+                        z.style.display = "block";
+
+                        document.getElementById("purchasePriceInput").required = true;
+                        document.getElementById("totalStockInput").required = true;
+                    } else {
+                        var y = document.getElementById("purchasePrice")
+                        var z = document.getElementById("totalStock")
+                        var raw1 = document.getElementById("rawMaterial1")
+
+                        var raw2 = document.getElementById("rawMaterial2")
+                        var raw3 = document.getElementById("rawMaterial3")
+                        var raw4 = document.getElementById("rawMaterial4")
+                        var raw5 = document.getElementById("rawMaterial5")
+                        var raw6 = document.getElementById("rawMaterial6")
+                        var raw7 = document.getElementById("rawMaterial7")
+                        raw1.style.display = "block";
+                        raw2.style.display = "block";
+                        raw3.style.display = "block";
+                        raw4.style.display = "block";
+                        raw5.style.display = "block";
+                        raw6.style.display = "block";
+                        raw7.style.display = "block";
+                        document.getElementById("purchasePriceInput").required = false;
+                        document.getElementById("totalStockInput").required = false;
+                        y.style.display = "none";
+                        z.style.display = "none";
+                    }
+                }
+
+                function displayQuantityInput1(p1, p2) {
+                    var k = p2 + 'Input';
+                    var j = document.getElementById(k);
+                    var x = document.getElementById(p1);
+                    var l = x.selectedIndex;
+                   
+                    if (l === 0) {
+                        var y = document.getElementById(p2)
+                        y.style.display = "none";
+                        j.required = false;
+                    } else {
+                        var y = document.getElementById(p2)
+                        y.style.display = "block";
+                        j.required = true;
+                    }
+
+                }
+            </script>
+            <table>
+                <tr>
+                    <td>
+                        Name of finished good:   
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{name}" id="name"  required/><br/>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Category:      
+                    </td>
+                    <td>
+                        <select th:field="*{finishedGoodCategory}" id="finishedGoodCategory">
+                            <option th:each="finishedGoodCategory: ${finishedGoodCategorys}" th:label="${finishedGoodCategory.category}" th:value="${finishedGoodCategory.category}" />
+                        </select>
+                    </td>
+                    <td>
+                        <p th:errors="*{finishedGoodCategory}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>                        
+                        Selling price: 
+                    </td>
+                    <td>
+                        <input type="number" th:field="*{sellingPrice}" id="sellingPrice" min="0" max="1000000" required/><br/>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Does it need to be cooked? :   
+                    </td>
+                    <td>
+                        <select th:field="*{cookable}" id="cookable" onchange="myFunction()">
+                            <option th:value="'No'" th:text="'No'"></option>
+                            <option th:value="'Yes'" th:text="'Yes'"></option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr id="purchasePrice">
+                    <td>                        
+                        Purchase price: 
+                    </td>
+                    <td>
+                        <input id="purchasePriceInput" type="number" th:field="*{purchasePrice}" min="0" max="1000000" required/><br/>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
+                    </td>
+                </tr>
+
+
+
+                <tr id="totalStock">
+                    <td>
+                        Total stock:    
+                    </td>
+                    <td>
+                        <input id="totalStockInput" type="number" th:field="*{totalStock}"  min="0" max="1000000" required/><br/>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('totalStock')}" th:errors="*{totalStock}"></span>
+                    </td>
+                </tr>
+
+                <tr id="rawMaterial1" style="display: none" >
+                    <td>
+                        Raw Material 1      
+                    </td>
+                    <td>
+                        <select id="rawMaterial1option" th:field="*{rawMaterial1}" onchange="displayQuantityInput1('rawMaterial1option', 'quantity1')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity1" style="display: none">
+                        Quantity
+                        <input id="quantity1Input" type="number" th:field="*{rawMaterial1quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="rawMaterial2" style="display: none" >
+                    <td>
+                        Raw Material 2      
+                    </td>
+                    <td>
+                        <select id="rawMaterial2option" th:field="*{rawMaterial2}" onchange="displayQuantityInput1('rawMaterial2option', 'quantity2')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity2" style="display: none">
+                        Quantity
+                        <input id="quantity2Input" type="number" th:field="*{rawMaterial2quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial3" style="display: none" >
+                    <td>
+                        Raw Material 3      
+                    </td>
+                    <td>
+                        <select id="rawMaterial3option" th:field="*{rawMaterial3}" onchange="displayQuantityInput1('rawMaterial3option', 'quantity3')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity3" style="display: none">
+                        Quantity
+                        <input id="quantity3Input" type="number" th:field="*{rawMaterial3quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial4" style="display: none" >
+                    <td>
+                        Raw Material 4      
+                    </td>
+                    <td>
+                        <select id="rawMaterial4option" th:field="*{rawMaterial4}" onchange="displayQuantityInput1('rawMaterial4option', 'quantity4')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity4" style="display: none">
+                        Quantity
+                        <input id="quantity4Input" type="number" th:field="*{rawMaterial4quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial5" style="display: none" >
+                    <td>
+                        Raw Material 5      
+                    </td>
+                    <td>
+                        <select id="rawMaterial5option" th:field="*{rawMaterial5}" onchange="displayQuantityInput1('rawMaterial5option', 'quantity5')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity5" style="display: none">
+                        Quantity
+                        <input id="quantity5Input" type="number" th:field="*{rawMaterial5quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial6" style="display: none" >
+                    <td>
+                        Raw Material 6      
+                    </td>
+                    <td>
+                        <select id="rawMaterial6option" th:field="*{rawMaterial6}" onchange="displayQuantityInput1('rawMaterial6option', 'quantity6')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity6" style="display: none">
+                        Quantity
+                        <input id="quantity6Input" type="number" th:field="*{rawMaterial6quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial7" style="display: none" >
+                    <td>
+                        Raw Material 7      
+                    </td>
+                    <td>
+                        <select id="rawMaterial7option" th:field="*{rawMaterial7}" onchange="displayQuantityInput1('rawMaterial7option', 'quantity7')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity7" style="display: none">
+                        Quantity
+                        <input id="quantity7Input" type="number" th:field="*{rawMaterial7quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+
+
+
+
+
+            </table>
+
+            <input type="submit" value="Submit" id="sendRawMaterialCreationForm"/>
+        </form>
+        <a href="/">Back</a>
+    </body>
+</html>

@@ -10,5 +10,19 @@ package com.senbazuru.inventory.model;
  * @author Binh
  */
 public enum Category {
-    DRINK, SUSHI, PHO, WOK
+    DRINK("Ital"), 
+    SUSHI("Sushi"), 
+    PHO("Pho"), 
+    WOK("Wok");
+
+    private String displayValue;
+     
+
+    Category(String displayValue) {
+        this.displayValue = displayValue;
+    }
+     
+    public String getDisplayValue() {
+        return displayValue;
+    }
 }

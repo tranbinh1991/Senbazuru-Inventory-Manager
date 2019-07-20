@@ -8,6 +8,7 @@ package com.senbazuru.inventory.service;
 import com.senbazuru.inventory.model.Category;
 import com.senbazuru.inventory.model.FinishedGoodCategory;
 import com.senbazuru.inventory.repository.FinishedGoodCategoryRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,13 @@ public class FinishedGoodCategoryService {
             fgc.setCategory(Category.values()[i]);
             saveFinishedGoodCategory(fgc);           
         }
+    }
+    
+    public List<FinishedGoodCategory> findAll(){
+        return finishedGoodCategoryRepository.findAll();
+    }
+    
+    public List<FinishedGoodCategory> findByCategory(Category category){
+        return finishedGoodCategoryRepository.findByCategory(category);
     }
 }
