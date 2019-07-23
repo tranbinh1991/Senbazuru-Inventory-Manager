@@ -10,24 +10,41 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body th:each="finishGood : ${finishedGoodList}">
+    <body>
 
-        <div th:text="${finishGood.id}"></div>
-        <div th:text="${finishGood.name}"></div>
-        <div th:text="${finishGood.cookable}"></div>
+    <tr th:each="cookedProduct : ${cookedProducts}">
 
-    <tr>
-        <td>Kategória: </td>       
-        <td th:each="finishedGoodCategory : ${finishGood.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
-    
-    </tr>
+    <div th:text="${cookedProduct.id}"></div>
+    <div th:text="${cookedProduct.name}"></div>
 
-    <div th:each="map : ${finishGood.itemQuantityMap}">
-     <div th:each="mapEntry : ${map}">
-         <span th:text="${mapEntry.key}"></span> = 
-         <span th:text="${mapEntry.value}"></span> 
-     </div>
-</div>
+
+
+    <td>Kategória: </td>       
+    <td th:each="finishedGoodCategory : ${cookedProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
+
+
+
+    <div th:each="map : ${cookedProduct.itemQuantityMap}">
+        <div th:each="mapEntry : ${map}">
+            <span th:text="${mapEntry.key}"></span> = 
+            <span th:text="${mapEntry.value}"></span> 
+        </div>
+    </div>
+</tr>
+
+<tr th:each="reSaleProduct : ${reSaleProducts}">
+
+<div th:text="${reSaleProduct.id}"></div>
+<div th:text="${reSaleProduct.name}"></div>
+
+
+
+<td>Kategória: </td>       
+<td th:each="finishedGoodCategory : ${reSaleProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
+
+<div th:text="${reSaleProduct.totalStock}"></div>
+<div th:text="${reSaleProduct.purchasePrice}"></div>
+</tr>
 
 
 </body>

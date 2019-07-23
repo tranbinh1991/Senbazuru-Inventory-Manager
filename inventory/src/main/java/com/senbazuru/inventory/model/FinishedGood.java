@@ -17,6 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
@@ -32,6 +34,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class FinishedGood {
 
     private static final long serialVersionUID = 1L;
@@ -39,29 +42,14 @@ public class FinishedGood {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private Integer totalStock;
     private String name;
-    private Boolean cookable;
-
-
-    @OneToMany(mappedBy = "finishedGood")
-    private List<FinishedGoodAcquisition> finishedGoodAcquisitionList;
 
     @OneToMany(mappedBy = "finishedGood")
     private List<Sale> saleList;
 
     private BigDecimal sellingPrice;
-    private BigDecimal purchasePrice;
 
     @ManyToMany(mappedBy = "finishedGoodList")
     private List<FinishedGoodCategory> finishedGoodCategory;
-
-    @ElementCollection
-    @CollectionTable(name = "rawmaterial_quantity",
-            joinColumns = {
-                @JoinColumn(name = "finished_good_id")})
-    @MapKeyColumn(name = "rawmaterial")
-    @Column(name = "quantity")
-    private Map<RawMaterial, Integer> itemQuantityMap;
 
 }

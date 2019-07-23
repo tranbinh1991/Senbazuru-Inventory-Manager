@@ -6,9 +6,11 @@
 package com.senbazuru.inventory.controller;
 
 import com.senbazuru.inventory.model.Category;
+import com.senbazuru.inventory.model.CookedProduct;
 import com.senbazuru.inventory.model.FinishedGood;
 import com.senbazuru.inventory.model.FinishedGoodCategory;
 import com.senbazuru.inventory.model.RawMaterial;
+import com.senbazuru.inventory.model.ReSaleProduct;
 import com.senbazuru.inventory.service.FinishedGoodCategoryService;
 import com.senbazuru.inventory.service.FinishedGoodService;
 import com.senbazuru.inventory.service.RawMaterialService;
@@ -59,33 +61,43 @@ public class FinishedGoodAdderController {
     public String createFinishedGood(Model model,
             @ModelAttribute("FinishedGoodCreationFormData") FinishedGoodCreationFormData finishedGoodCreationFormData, BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            FinishedGood finishedGood = new FinishedGood();
-
-            String name = finishedGoodCreationFormData.getName();
-            finishedGood.setName(name);
-
-            List<FinishedGoodCategory> categories = processCategories(finishedGoodCreationFormData, finishedGood);
-            finishedGood.setFinishedGoodCategory(categories);
-
-            int sellingPrice = Integer.parseInt(finishedGoodCreationFormData.getSellingPrice());
-            finishedGood.setSellingPrice(BigDecimal.valueOf(sellingPrice));
-
-
 
             if (finishedGoodCreationFormData.getCookable().equals("Yes")) {
-                finishedGood.setCookable(Boolean.TRUE);
+                CookedProduct finishedGood = new CookedProduct();
+
+                String name = finishedGoodCreationFormData.getName();
+                finishedGood.setName(name);
+
+                List<FinishedGoodCategory> categories = processCategories(finishedGoodCreationFormData, finishedGood);
+                finishedGood.setFinishedGoodCategory(categories);
+
+                int sellingPrice = Integer.parseInt(finishedGoodCreationFormData.getSellingPrice());
+                finishedGood.setSellingPrice(BigDecimal.valueOf(sellingPrice));
+
                 Map<RawMaterial, Integer> itemQuantityMap = processRawMaterialsAndQuantities(finishedGoodCreationFormData, finishedGood);
                 finishedGood.setItemQuantityMap(itemQuantityMap);
-                
+                finishedGoodService.saveFinishedGood(finishedGood);
 
             } else {
-                finishedGood.setCookable(Boolean.FALSE);
+
+                ReSaleProduct finishedGood = new ReSaleProduct();
+
+                String name = finishedGoodCreationFormData.getName();
+                finishedGood.setName(name);
+
+                List<FinishedGoodCategory> categories = processCategories(finishedGoodCreationFormData, finishedGood);
+                finishedGood.setFinishedGoodCategory(categories);
+
+                int sellingPrice = Integer.parseInt(finishedGoodCreationFormData.getSellingPrice());
+                finishedGood.setSellingPrice(BigDecimal.valueOf(sellingPrice));
+
                 int purchasePrice = Integer.parseInt(finishedGoodCreationFormData.getPurchasePrice());
                 finishedGood.setPurchasePrice(BigDecimal.valueOf(purchasePrice));
                 finishedGood.setTotalStock(Integer.parseInt(finishedGoodCreationFormData.getTotalStock()));
+                finishedGoodService.saveFinishedGood(finishedGood);
             }
 
-            finishedGoodService.saveFinishedGood(finishedGood);
+            
 
             model.addAttribute("successMessage", "Succesful creation!");
         }
@@ -103,7 +115,6 @@ public class FinishedGoodAdderController {
 
         return categories;
     }
-
 
     private Map<RawMaterial, Integer> processRawMaterialsAndQuantities(FinishedGoodCreationFormData finishedGoodCreationFormData, FinishedGood finishedGood) {
         Map<RawMaterial, Integer> rawMaterialList = new HashMap<>();
@@ -123,7 +134,6 @@ public class FinishedGoodAdderController {
                 rawMaterialList.put(rawMaterial, Integer.parseInt(quantityData[i]));
             }
         }
-
 
         return rawMaterialList;
     }
