@@ -5,9 +5,10 @@
  */
 package com.senbazuru.inventory.repository;
 
-import com.senbazuru.inventory.model.FinishedGood;
-import com.senbazuru.inventory.model.FinishedGoodAcquisition;
+
+import com.senbazuru.inventory.model.Acquisition;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Repository;
  * @author Binh
  */
 @Repository
-public interface FinishedGoodAcquistionRepository extends JpaRepository<FinishedGoodAcquisition, Long>{
-    
+public interface AcquistionRepository extends JpaRepository<Acquisition, Long> {
 
-    
+
+    List<Acquisition> findAll();
+
+    Optional<Acquisition> findById(Long id);
+
 }

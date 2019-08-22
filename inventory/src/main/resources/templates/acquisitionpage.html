@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+        <title>Adding finished good to inventory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        
+        <div th:text="${successMessage}"></div>
+        <form th:action="@{/acquisitionpage}" th:object="${AcquisitionCreationFormData}" method="POST">
+
+
+
+            <script>
+              
+
+                function displayQuantityInput1(p1, p2) {
+                    var k = p2 + 'Input';
+                    var j = document.getElementById(k);
+                    var x = document.getElementById(p1);
+                    var l = x.selectedIndex;
+
+                    if (l === 0) {
+                        var y = document.getElementById(p2)
+                        y.style.display = "none";
+                        j.required = false;
+                    } else {
+                        var y = document.getElementById(p2)
+                        y.style.display = "block";
+                        j.required = true;
+                    }
+
+                }
+            </script>
+            
+            <h1>Add Raw Material Acquisition!</h1>
+            <table>
+               
+
+                <tr id="rawMaterial1" style="display: block" >
+                    <td>
+                        Raw Material 1      
+                    </td>
+                    <td>
+                        <select id="rawMaterial1option" th:field="*{rawMaterial1}" onchange="displayQuantityInput1('rawMaterial1option', 'quantity1')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity1" style="display: none">
+                        Quantity
+                        <input id="quantity1Input" type="number" th:field="*{rawMaterial1quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="rawMaterial2" style="display: block" >
+                    <td>
+                        Raw Material 2      
+                    </td>
+                    <td>
+                        <select id="rawMaterial2option" th:field="*{rawMaterial2}" onchange="displayQuantityInput1('rawMaterial2option', 'quantity2')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity2" style="display: none">
+                        Quantity
+                        <input id="quantity2Input" type="number" th:field="*{rawMaterial2quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial3" style="display: block" >
+                    <td>
+                        Raw Material 3      
+                    </td>
+                    <td>
+                        <select id="rawMaterial3option" th:field="*{rawMaterial3}" onchange="displayQuantityInput1('rawMaterial3option', 'quantity3')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity3" style="display: none">
+                        Quantity
+                        <input id="quantity3Input" type="number" th:field="*{rawMaterial3quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial4" style="display: block" >
+                    <td>
+                        Raw Material 4      
+                    </td>
+                    <td>
+                        <select id="rawMaterial4option" th:field="*{rawMaterial4}" onchange="displayQuantityInput1('rawMaterial4option', 'quantity4')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity4" style="display: none">
+                        Quantity
+                        <input id="quantity4Input" type="number" th:field="*{rawMaterial4quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial5" style="display: block" >
+                    <td>
+                        Raw Material 5      
+                    </td>
+                    <td>
+                        <select id="rawMaterial5option" th:field="*{rawMaterial5}" onchange="displayQuantityInput1('rawMaterial5option', 'quantity5')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity5" style="display: none">
+                        Quantity
+                        <input id="quantity5Input" type="number" th:field="*{rawMaterial5quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial6" style="display: block" >
+                    <td>
+                        Raw Material 6      
+                    </td>
+                    <td>
+                        <select id="rawMaterial6option" th:field="*{rawMaterial6}" onchange="displayQuantityInput1('rawMaterial6option', 'quantity6')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity6" style="display: none">
+                        Quantity
+                        <input id="quantity6Input" type="number" th:field="*{rawMaterial6quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="rawMaterial7" style="display: block" >
+                    <td>
+                        Raw Material 7      
+                    </td>
+                    <td>
+                        <select id="rawMaterial7option" th:field="*{rawMaterial7}" onchange="displayQuantityInput1('rawMaterial7option', 'quantity7')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${rawMaterials}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="quantity7" style="display: none">
+                        Quantity
+                        <input id="quantity7Input" type="number" th:field="*{rawMaterial7quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+
+
+
+
+
+            </table>
+            
+            <h1>Add Finished Good Acquisition!</h1>
+            
+                        <table>
+               
+
+                <tr id="reSaleProduct1" style="display: block" >
+                    <td>
+                        Finished Good 1      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct1option" th:field="*{reSaleProduct1}" onchange="displayQuantityInput1('reSaleProduct1option', 'rsquantity1')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity1" style="display: none">
+                        Quantity
+                        <input id="quantity1Input" type="number" th:field="*{reSaleProduct1quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="reSaleProduct2" style="display: block" >
+                    <td>
+                        Finished Good 2      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct2option" th:field="*{reSaleProduct2}" onchange="displayQuantityInput1('reSaleProduct2option', 'rsquantity2')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity2" style="display: none">
+                        Quantity
+                        <input id="quantity2Input" type="number" th:field="*{reSaleProduct2quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="reSaleProduct3" style="display: block" >
+                    <td>
+                        Finished Good 3      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct3option" th:field="*{reSaleProduct3}" onchange="displayQuantityInput1('reSaleProduct3option', 'rsquantity3')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity3" style="display: none">
+                        Quantity
+                        <input id="quantity3Input" type="number" th:field="*{reSaleProduct3quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+                <tr id="reSaleProduct4" style="display: block" >
+                    <td>
+                        Finished Good 4      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct4option" th:field="*{reSaleProduct4}" onchange="displayQuantityInput1('reSaleProduct4option', 'rsquantity4')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity4" style="display: none">
+                        Quantity
+                        <input id="quantity4Input" type="number" th:field="*{reSaleProduct4quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="reSaleProduct5" style="display: block" >
+                    <td>
+                        Finished Good 5      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct5option" th:field="*{reSaleProduct5}" onchange="displayQuantityInput1('reSaleProduct5option', 'rsquantity5')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity5" style="display: none">
+                        Quantity
+                        <input id="quantity5Input" type="number" th:field="*{reSaleProduct5quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+                <tr id="reSaleProduct6" style="display: block" >
+                    <td>
+                        Finished Good 6      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct6option" th:field="*{reSaleProduct6}" onchange="displayQuantityInput1('reSaleProduct6option', 'rsquantity6')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity6" style="display: none">
+                        Quantity
+                        <input id="quantity6Input" type="number" th:field="*{reSaleProduct6quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+                <tr id="reSaleProduct7" style="display: block" >
+                    <td>
+                        Finished Good 7      
+                    </td>
+                    <td>
+                        <select id="reSaleProduct7option" th:field="*{reSaleProduct7}" onchange="displayQuantityInput1('reSaleProduct7option', 'rsquantity7')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="rawMaterial: ${reSaleProducts}" th:label="${rawMaterial.name}" th:value="${rawMaterial.name}" />
+                        </select>
+                    </td>
+
+                    <td id="rsquantity7" style="display: none">
+                        Quantity
+                        <input id="quantity7Input" type="number" th:field="*{reSaleProduct7quantityneeded}" min="0" max="1000000" /><br/>
+                    </td>
+
+                </tr>
+
+
+
+
+
+            </table>
+
+            <input type="submit" value="Submit" id="AcquisitionCreationForm"/>
+        </form>
+        <a href="/">Back</a>
+    </body>
+</html>

@@ -22,9 +22,7 @@ import lombok.Setter;
 public class ReSaleProduct extends FinishedGood {
 
     private Integer totalStock;
-    
-    @OneToMany(mappedBy = "finishedGood")
-    private List<FinishedGoodAcquisition> finishedGoodAcquisitionList;
+    private Integer minimumStock;
     
     private BigDecimal purchasePrice;
 }

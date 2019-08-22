@@ -24,5 +24,6 @@ public class RawMaterialCreationFormData {
     private String name; 
     private String purchasePrice;
     private String totalStock;
-    
+    private String imageLink;
+    private String minimumStock;
 }

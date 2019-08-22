@@ -5,6 +5,7 @@
  */
 package com.senbazuru.inventory.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class FinishedGood {
+public class FinishedGood implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +44,7 @@ public class FinishedGood {
     private Long id;
 
     private String name;
+    private String imageLink;
 
     @OneToMany(mappedBy = "finishedGood")
     private List<Sale> saleList;

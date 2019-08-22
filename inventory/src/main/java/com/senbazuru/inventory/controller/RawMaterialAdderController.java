@@ -48,14 +48,20 @@ public class RawMaterialAdderController {
             String name = rawMaterialCreationFormData.getName();
             rawMaterial.setName(name);
             
+            String imageLink = rawMaterialCreationFormData.getImageLink();
+            rawMaterial.setImageLink(imageLink);
+            
             int purchasePrice = Integer.parseInt(rawMaterialCreationFormData.getPurchasePrice());
             rawMaterial.setPurchasePrice(BigDecimal.valueOf(purchasePrice));
             
             int totalStock = Integer.parseInt(rawMaterialCreationFormData.getTotalStock());
             rawMaterial.setTotalStock(totalStock);
+            
+            int minimumStock = Integer.parseInt(rawMaterialCreationFormData.getMinimumStock());
+            rawMaterial.setMinimumStock(minimumStock);
 
           
-            rawMaterialService.saveRawMaterial(rawMaterial);
+            rawMaterialService.saveAndFlushRawMaterial(rawMaterial);
             model.addAttribute("successMessage", "Succesful creation!");
         }
         return showRawMaterialAdderPage(model);

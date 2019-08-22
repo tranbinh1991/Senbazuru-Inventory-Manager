@@ -17,19 +17,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RawMaterialService {
-    
+
     @Autowired
-    RawMaterialRepository  rawMaterialRepository;
-    
-    public RawMaterial saveRawMaterial(RawMaterial rawMaterial){
+    RawMaterialRepository rawMaterialRepository;
+
+    public RawMaterial saveAndFlushRawMaterial(RawMaterial rawMaterial) {
         return rawMaterialRepository.saveAndFlush(rawMaterial);
     }
-    
-    public List<RawMaterial> findAll(){
+
+    public RawMaterial saveRawMaterial(RawMaterial rawMaterial) {
+        return rawMaterialRepository.save(rawMaterial);
+    }
+
+    public List<RawMaterial> findAll() {
         return rawMaterialRepository.findAll();
     }
-    
-    public List<RawMaterial> findByName(String name){
+
+    public List<RawMaterial> findByName(String name) {
         return rawMaterialRepository.findByName(name);
+    }
+    
+    public RawMaterial findFirstById(Long id){
+        return rawMaterialRepository.findFirstById(id);
     }
 }

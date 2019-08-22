@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Senbazuru Order</title>
+        <meta name="description" content="This is the description">
+        <link rel="stylesheet" href="/css/styles.css" />
+        <style>
+            .button {
+                background-color: #4CAF50;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <header background-color="#776F6D">
+
+        </header>
+
+        <a th:href="@{'/shoppingCart/{id}'(id=1)}">
+            <button type="button" class="button">Table 1</button>
+        </a>
+        <a th:href="@{'/shoppingCart/{id}'(id=2)}">
+            <button type="button" class="button">Table 2</button>
+        </a>
+
+        <a th:href="@{'/shoppingCart/{id}'(id=3)}">
+            <button type="button" class="button">Table 3</button>
+        </a>
+
+        <a th:href="@{'/shoppingCart/{id}'(id=4)}">
+            <button type="button" class="button">Table 4</button>
+        </a>
+
+        <a th:href="@{'/shoppingCart/{id}'(id=5)}">
+            <button type="button" class="button">Table 5</button>
+        </a>
+
+        <a th:href="@{'/shoppingCart/{id}'(id=6)}">
+            <button type="button" class="button">Table 6</button>
+        </a>
+
+        <h1 align="center" background-color="#776F6D" th:text="'Current Table: '+${tableId}"></h1>
+
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" size="100" style="margin:0px auto; display:block;">
+        <div id="myUL">
+            <section class="container content-section">
+                <h2 class="section-header">Drinks</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${drinkList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+            <section class="container content-section">
+                <h2 class="section-header">Starters</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${starterList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+            <section class="container content-section">
+                <h2 class="section-header">Main Courses</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${maincourseList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+            <section class="container content-section">
+                <h2 class="section-header">Sushi</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${sushiList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+
+
+            <section class="container content-section">
+                <h2 class="section-header">Ramen</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${ramenList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+            <section class="container content-section">
+                <h2 class="section-header">Pho</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${phoList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+
+            <section class="container content-section">
+                <h2 class="section-header">Dessert</h2>
+                <div class="shop-items">
+
+                    <div class="shop-item" th:each="finishedGood : ${dessertList}">
+
+                        <a class="shop-item-title" th:text="${finishedGood.name}"></a>
+                        <img class="shop-item-image" th:src="@{${finishedGood.imageLink}}" style="width:100px;height:100px;">
+
+                        <div class="shop-item-details">
+                            <span class="shop-item-price" th:text="${finishedGood.sellingPrice}"></span>                       
+
+                            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${finishedGood.id})}" class="col-md-1">
+
+                                <button type="button" class="btn btn-primary shop-item-button" th:text="Buy">Buy</button>
+                            </a>
+                        </div>
+
+
+                    </div> 
+                </div> 
+
+
+            </section>
+
+
+        </div>
+
+    </section>-->
+    <section class="container content-section">
+        <h2 class="section-header">ORDERED ITEMS</h2>
+        <div class="cart-row">
+            <span class="cart-item cart-header cart-column">ITEM</span>
+            <span class="cart-price cart-header cart-column">PRICE</span>
+            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+        </div>
+        <div class="cart-row" th:each="product : ${products.entrySet()}">
+
+            <span th:text="${product.getKey().name}" th:href="@{'/product/' + ${product.getKey().id}}" class="cart-item cart-header cart-column">Title</span>
+            <span th:inline="text" class="cart-price cart-header cart-column">[[${product.getKey().sellingPrice}]] Huf</span>
+            <span th:inline="text" class="cart-quantity cart-header cart-column">[[${product.getValue()}]]
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+                <a th:href="@{'/shoppingCart/removeProduct/{id}'(id=${product.getKey().id})}">
+                    <button  type="button" class="btn btn-primary" th:text="Remove">Remove</button>
+                </a>
+            </span>
+
+
+        </div>
+
+        <div class="cart-total">
+            <strong class="cart-total-title">Total</strong>
+            <span class="cart-total-price"> Total: [[${total}]]</span>
+        </div>
+
+        <a th:href="@{'/succesfulSale'}" >
+            <button  class="btn btn-primary btn-purchase" type="button">Close table orders</button>
+        </a>
+        
+        <a th:href="@{'/recipe'}" th:target="_blank">
+            <button  class="btn btn-primary btn-purchase" type="button">Create recipe</button>
+        </a>
+        
+        
+        
+
+    </section>
+
+
+
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByClassName("shop-item");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    
+
+
+</body>
+</html>

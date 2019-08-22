@@ -12,6 +12,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,28 +26,33 @@ import lombok.Setter;
  *
  * @author Binh
  */
-@Entity
 @Setter
 @Getter
-public class Sale {
+@Entity
+public class Acquisition {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
-    @ManyToOne
-    private FinishedGood finishedGood;
-    
-    private BigDecimal totalSellingPrice;
-    
+
+    private BigDecimal totalPurchasePrice;
+
     private LocalDateTime localDateTime;
-    
-        @ElementCollection
-    @CollectionTable(name = "finished_good_quantity",
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "re_sale_product_quantity",
             joinColumns = {
-                @JoinColumn(name = "sale_id")})
-    @MapKeyColumn(name = "finished_good")
+                @JoinColumn(name = "acquisition_id")})
+    @MapKeyColumn(name = "re_sale_product")
     @Column(name = "quantity")
-    private Map<FinishedGood, Integer> itemQuantityMap;
+    private Map<ReSaleProduct, Integer> reSaleProductQuantityMap;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "raw_material_acquisition_quantity",
+            joinColumns = {
+                @JoinColumn(name = "acquisition_id")})
+    @MapKeyColumn(name = "raw_material")
+    @Column(name = "quantity")
+    private Map<RawMaterial, Integer> rawMaterialQuantityMap;
 }

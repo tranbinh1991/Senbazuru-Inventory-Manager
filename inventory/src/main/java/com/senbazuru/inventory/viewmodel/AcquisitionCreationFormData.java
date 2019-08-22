@@ -18,16 +18,22 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class FinishedGoodCreationFormData {
+public class AcquisitionCreationFormData {
 
-    private String name;
-    private String purchasePrice;
-    private String sellingPrice;
-    private String totalStock;
-    private String cookable;
-    private String finishedGoodCategory;
-    private String imageLink;
-    private String minimumStock;
+    private String reSaleProduct1;
+    private String reSaleProduct1quantityneeded;
+    private String reSaleProduct2;
+    private String reSaleProduct2quantityneeded;
+    private String reSaleProduct3;
+    private String reSaleProduct3quantityneeded;
+    private String reSaleProduct4;
+    private String reSaleProduct4quantityneeded;
+    private String reSaleProduct5;
+    private String reSaleProduct5quantityneeded;
+    private String reSaleProduct6;
+    private String reSaleProduct6quantityneeded;
+    private String reSaleProduct7;
+    private String reSaleProduct7quantityneeded;
 
     private String rawMaterial1;
     private String rawMaterial1quantityneeded;

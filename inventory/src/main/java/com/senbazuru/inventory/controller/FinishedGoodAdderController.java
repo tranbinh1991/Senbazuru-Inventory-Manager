@@ -67,6 +67,8 @@ public class FinishedGoodAdderController {
 
                 String name = finishedGoodCreationFormData.getName();
                 finishedGood.setName(name);
+                String imageLink = finishedGoodCreationFormData.getImageLink();
+                finishedGood.setImageLink(imageLink);
 
                 List<FinishedGoodCategory> categories = processCategories(finishedGoodCreationFormData, finishedGood);
                 finishedGood.setFinishedGoodCategory(categories);
@@ -74,9 +76,9 @@ public class FinishedGoodAdderController {
                 int sellingPrice = Integer.parseInt(finishedGoodCreationFormData.getSellingPrice());
                 finishedGood.setSellingPrice(BigDecimal.valueOf(sellingPrice));
 
-                Map<RawMaterial, Integer> itemQuantityMap = processRawMaterialsAndQuantities(finishedGoodCreationFormData, finishedGood);
+                Map<RawMaterial, Integer> itemQuantityMap = processRawMaterialsAndQuantities(finishedGoodCreationFormData);
                 finishedGood.setItemQuantityMap(itemQuantityMap);
-                finishedGoodService.saveFinishedGood(finishedGood);
+                finishedGoodService.saveAndFlushFinishedGood(finishedGood);
 
             } else {
 
@@ -84,6 +86,9 @@ public class FinishedGoodAdderController {
 
                 String name = finishedGoodCreationFormData.getName();
                 finishedGood.setName(name);
+                String imageLink = finishedGoodCreationFormData.getImageLink();
+                finishedGood.setImageLink(imageLink);
+                
 
                 List<FinishedGoodCategory> categories = processCategories(finishedGoodCreationFormData, finishedGood);
                 finishedGood.setFinishedGoodCategory(categories);
@@ -94,10 +99,9 @@ public class FinishedGoodAdderController {
                 int purchasePrice = Integer.parseInt(finishedGoodCreationFormData.getPurchasePrice());
                 finishedGood.setPurchasePrice(BigDecimal.valueOf(purchasePrice));
                 finishedGood.setTotalStock(Integer.parseInt(finishedGoodCreationFormData.getTotalStock()));
-                finishedGoodService.saveFinishedGood(finishedGood);
+                finishedGood.setMinimumStock(Integer.parseInt(finishedGoodCreationFormData.getMinimumStock()));
+                finishedGoodService.saveAndFlushFinishedGood(finishedGood);
             }
-
-            
 
             model.addAttribute("successMessage", "Succesful creation!");
         }
@@ -116,15 +120,15 @@ public class FinishedGoodAdderController {
         return categories;
     }
 
-    private Map<RawMaterial, Integer> processRawMaterialsAndQuantities(FinishedGoodCreationFormData finishedGoodCreationFormData, FinishedGood finishedGood) {
+    private Map<RawMaterial, Integer> processRawMaterialsAndQuantities(FinishedGoodCreationFormData finishedGoodCreationFormData) {
         Map<RawMaterial, Integer> rawMaterialList = new HashMap<>();
         String[] rawMaterialData = {finishedGoodCreationFormData.getRawMaterial1(), finishedGoodCreationFormData.getRawMaterial2(),
             finishedGoodCreationFormData.getRawMaterial3(), finishedGoodCreationFormData.getRawMaterial4(),
             finishedGoodCreationFormData.getRawMaterial5(), finishedGoodCreationFormData.getRawMaterial6(), finishedGoodCreationFormData.getRawMaterial7()};
 
         String[] quantityData = {finishedGoodCreationFormData.getRawMaterial1quantityneeded(), finishedGoodCreationFormData.getRawMaterial2quantityneeded(),
-            finishedGoodCreationFormData.getRawMaterial3(), finishedGoodCreationFormData.getRawMaterial4quantityneeded(),
-            finishedGoodCreationFormData.getRawMaterial5quantityneeded(), finishedGoodCreationFormData.getRawMaterial6(), finishedGoodCreationFormData.getRawMaterial7quantityneeded()};
+            finishedGoodCreationFormData.getRawMaterial3quantityneeded(), finishedGoodCreationFormData.getRawMaterial4quantityneeded(),
+            finishedGoodCreationFormData.getRawMaterial5quantityneeded(), finishedGoodCreationFormData.getRawMaterial6quantityneeded(), finishedGoodCreationFormData.getRawMaterial7quantityneeded()};
 
         for (int i = 0; i < rawMaterialData.length; i++) {
             if (!rawMaterialData[i].equals("")) {

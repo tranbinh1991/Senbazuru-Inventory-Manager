@@ -14,16 +14,17 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Add new raw material!</h1>
+        <h1>Change raw material!</h1>
         <div th:text="${successMessage}"></div>
-        <form th:action="@{/rawmaterialadder}" th:object="${RawMaterialCreationFormData}" method="POST">
+        <form th:action="@{/rawmaterial/change/{id} (id=${rawmaterial.id})}" th:object="${RawMaterialCreationFormData}" method="POST">
+            
             <table>
                 <tr>
                     <td>
                         Name of raw material:   
                     </td>
                     <td>
-                        <input type="text" th:field="*{name}" id="name"  required/><br/>
+                        <input type="text" th:field="*{name}" id="name" th:placeholder="${rawmaterial.name}"/><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -37,7 +38,7 @@ and open the template in the editor.
                         Purchase price: 
                     </td>
                     <td>
-                        <input type="number" th:field="*{purchasePrice}" id="purchasePrice" min="0" max="1000000" required/><br/>
+                        <input type="number" th:field="*{purchasePrice}" id="purchasePrice" min="0" max="1000000" th:placeholder="${rawmaterial.purchasePrice}" /><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
@@ -49,7 +50,7 @@ and open the template in the editor.
                         Total stock:    
                     </td>
                     <td>
-                        <input type="number" th:field="*{totalStock}" id="totalStock" min="0" max="1000000" required/><br/>
+                        <input type="number" th:field="*{totalStock}" id="totalStock" min="0" max="1000000" th:placeholder="${rawmaterial.totalStock}"/><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('totalStock')}" th:errors="*{totalStock}"></span>
@@ -61,7 +62,7 @@ and open the template in the editor.
                         Minimum stock:    
                     </td>
                     <td>
-                        <input type="number" th:field="*{minimumStock}" id="totalStock" min="0" max="1000000" required/><br/>
+                        <input type="number" th:field="*{minimumStock}" id="totalStock" min="0" max="1000000" th:placeholder="${rawmaterial.minimumStock}"/><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('minimumStock')}" th:errors="*{minimumStock}"></span>
@@ -74,7 +75,7 @@ and open the template in the editor.
                         Image Link:    
                     </td>
                     <td>
-                        <input type="text" th:field="*{imageLink}" id="imageLink"  required/><br/>
+                        <input type="text" th:field="*{imageLink}" id="imageLink"  th:placeholder="${rawmaterial.imageLink}"/><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('imageLink')}" th:errors="*{imageLink}"></span>
@@ -85,6 +86,6 @@ and open the template in the editor.
 
             <input type="submit" value="Submit" id="sendRawMaterialCreationForm"/>
         </form>
-        <a href="/">Back</a>
+        <a href="/rawmaterial">Back</a>
     </body>
 </html>

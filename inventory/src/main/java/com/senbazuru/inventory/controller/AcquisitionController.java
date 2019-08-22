@@ -5,10 +5,13 @@
  */
 package com.senbazuru.inventory.controller;
 
+import com.senbazuru.inventory.model.CookedProduct;
 import com.senbazuru.inventory.model.FinishedGood;
-import com.senbazuru.inventory.service.FinishedGoodCategoryService;
+import com.senbazuru.inventory.model.ReSaleProduct;
+import com.senbazuru.inventory.service.AcquisitionService;
 import com.senbazuru.inventory.service.FinishedGoodService;
-import com.senbazuru.inventory.service.TableSessionService;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,22 +22,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Binh
  */
 @Controller
-public class MainPageController {
+public class AcquisitionController {
     
     @Autowired
-    FinishedGoodCategoryService categoryService;
-    
-    @Autowired
-    TableSessionService tableSessionService;
+    private AcquisitionService acquisitionService;
 
-
-    @RequestMapping("/")
-    public String index(Model model) {
+    @RequestMapping("/displayacquisition")
+    public String displayAcquisition(Model model) {
         
+   
+        model.addAttribute("acquisitionList", acquisitionService.findAll());
 
-//        
-//        categoryService.saveAllCategories();
-        return "index.html";
+        
+        return "displayacquisition.html";
     }
 }
 

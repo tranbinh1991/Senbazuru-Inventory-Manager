@@ -7,6 +7,7 @@ package com.senbazuru.inventory.repository;
 
 import com.senbazuru.inventory.model.FinishedGood;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +16,14 @@ import org.springframework.stereotype.Repository;
  * @author Binh
  */
 @Repository
-public interface FinishedGoodRepository extends JpaRepository<FinishedGood, Long>{
-    
+public interface FinishedGoodRepository extends JpaRepository<FinishedGood, Long> {
+
     List<FinishedGood> findByName(String name);
-    List<FinishedGood> findAll();   
+
+    List<FinishedGood> findAll();
+
+    Optional<FinishedGood> findById(Long id);
+    
+    FinishedGood findFirstById(Long id);
+
 }

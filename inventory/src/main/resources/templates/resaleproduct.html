@@ -14,11 +14,10 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Add Finished Good!</h1>
+        <h1>Change Finished Good!</h1>
         <div th:text="${successMessage}"></div>
-        <form th:action="@{/finishedgoodadder}" th:object="${FinishedGoodCreationFormData}" method="POST">
-
-
+        <form th:action="@{/finishedgoodpage/change/{id} (id=${finishedgood.id})}" th:object="${FinishedGoodCreationFormData}" method="POST">
+            
 
             <script>
                 function myFunction() {
@@ -105,7 +104,7 @@ and open the template in the editor.
                         Name of finished good:   
                     </td>
                     <td>
-                        <input type="text" th:field="*{name}" id="name"  required/><br/>
+                        <input type="text" th:field="*{name}" id="name"  th:placeholder="${finishedgood.name}"/><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -119,7 +118,7 @@ and open the template in the editor.
                         Image Link:    
                     </td>
                     <td>
-                        <input type="text" th:field="*{imageLink}" id="imageLink"  required/><br/>
+                        <input type="text" th:field="*{imageLink}" id="imageLink" th:placeholder="${finishedgood.imageLink}" /><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('imageLink')}" th:errors="*{imageLink}"></span>
@@ -131,6 +130,8 @@ and open the template in the editor.
                     </td>
                     <td>
                         <select th:field="*{finishedGoodCategory}" id="finishedGoodCategory">
+                            
+                            <option th:value="${finishedgood.finishedGoodCategory[0].category}" th:label="${finishedgood.finishedGoodCategory[0].category}" />
                             <option th:each="finishedGoodCategory: ${finishedGoodCategorys}" th:label="${finishedGoodCategory.category}" th:value="${finishedGoodCategory.category}" />
                         </select>
                     </td>
@@ -143,7 +144,7 @@ and open the template in the editor.
                         Selling price: 
                     </td>
                     <td>
-                        <input type="number" th:field="*{sellingPrice}" id="sellingPrice" min="0" max="1000000" required/><br/>
+                        <input type="number" th:placeholder="${finishedgood.sellingPrice}" th:field="*{sellingPrice}" id="sellingPrice" min="0" max="1000000" /><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}"></span>
@@ -167,7 +168,7 @@ and open the template in the editor.
                         Purchase price: 
                     </td>
                     <td>
-                        <input id="purchasePriceInput" type="number" th:field="*{purchasePrice}" min="0" max="1000000" required/><br/>
+                        <input id="purchasePriceInput"  th:placeholder="${finishedgood.purchasePrice}" type="number" th:field="*{purchasePrice}" min="0" max="1000000" /><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
@@ -181,19 +182,19 @@ and open the template in the editor.
                         Total stock:    
                     </td>
                     <td>
-                        <input id="totalStockInput" type="number" th:field="*{totalStock}"  min="0" max="1000000" required/><br/>
+                        <input id="totalStockInput" th:placeholder="${finishedgood.totalStock}" type="number" th:field="*{totalStock}"  min="0" max="1000000" /><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('totalStock')}" th:errors="*{totalStock}"></span>
                     </td>
                 </tr>
-
-                <tr id="minimumStock">
+                
+                                <tr id="minimumStock">
                     <td>
                         Minimum stock:    
                     </td>
                     <td>
-                        <input id="minimumStockInput" type="number" th:field="*{minimumStock}"  min="0" max="1000000" required/><br/>
+                        <input id="minimumStockInput" th:placeholder="${finishedgood.minimumStock}" type="number" th:field="*{minimumStock}"  min="0" max="1000000" /><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('minimumStock')}" th:errors="*{minimumStock}"></span>
@@ -329,6 +330,8 @@ and open the template in the editor.
 
             <input type="submit" value="Submit" id="sendRawMaterialCreationForm"/>
         </form>
-        <a href="/">Back</a>
+        <a href="/finishedgood">Back</a>
     </body>
 </html>
+
+

@@ -5,9 +5,7 @@
  */
 package com.senbazuru.inventory.repository;
 
-import com.senbazuru.inventory.model.FinishedGood;
-import com.senbazuru.inventory.model.FinishedGoodAcquisition;
-import com.senbazuru.inventory.model.RawAcquisition;
+
 import com.senbazuru.inventory.model.RawMaterial;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +20,5 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>{
     
     List<RawMaterial> findByName(String name);
     List<RawMaterial> findAll();
-    
+    RawMaterial findFirstById(Long id);
 }

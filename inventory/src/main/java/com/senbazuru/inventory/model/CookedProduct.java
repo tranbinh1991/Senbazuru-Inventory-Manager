@@ -10,6 +10,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import lombok.Getter;
@@ -24,7 +25,7 @@ import lombok.Setter;
 @Entity
 public class CookedProduct extends FinishedGood {
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "rawmaterial_quantity",
             joinColumns = {
                 @JoinColumn(name = "cooked_product_id")})

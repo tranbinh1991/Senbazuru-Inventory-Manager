@@ -33,6 +33,8 @@ public class RawMaterial {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    
+    private String imageLink;
 
     @Column(nullable = false)
     private String name;
@@ -40,8 +42,9 @@ public class RawMaterial {
     private BigDecimal purchasePrice;
     @Column(nullable = false)
     private Integer totalStock;
+        private Integer minimumStock;
 
-    @OneToMany(mappedBy = "rawMaterial")
-    private List<RawAcquisition> rawMaterialQcquisitionList;
+
+
 
 }

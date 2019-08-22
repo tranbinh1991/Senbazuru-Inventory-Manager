@@ -4,48 +4,108 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Kész termékek</title>
+
+        <script src="/js/xlsx.full.min.js"></script>
+        <script src="/js/FileSaver.min.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-2.1.4.js"></script>
+        <title>Nyers Anyagok</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <tr th:each="cookedProduct : ${cookedProducts}">
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-    <div th:text="${cookedProduct.id}"></div>
-    <div th:text="${cookedProduct.name}"></div>
+                    </head>
 
 
+                    <body>
 
-    <td>Kategória: </td>       
-    <td th:each="finishedGoodCategory : ${cookedProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
+                        <h1 id="navbar"><span>Nyers Anyagok</span></h1>
+                        <div th:text="${successMessage}"></div>
+                        <div id="wrapper">
+                            <button id="button-a">Create Excel</button>
+                            <table id="mytable" class="table table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Ingredients</th>
+                                        <th scope="col">Total Stock</th>
+                                        <th scope="col">Purchase Price</th>
+                                        <th scope="col">Selling Price</th>
+                                    </tr>
+                                </thead>
+                                <tr th:each="cookedProduct : ${cookedProducts}">
+                                    <td th:text="${cookedProduct.id}"></td>
+                                    <td th:text="${cookedProduct.name}"></td>
+                                    <td><img  class="cookedProductImageLink" th:src="@{${cookedProduct.imageLink}}" th:name="${cookedProduct.id}" width="100" height="100"/></td>
+                                    <td th:each="finishedGoodCategory : ${cookedProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}"></td>
+                                    <td>
+                                        <div th:each="map : ${cookedProduct.itemQuantityMap}">
+                                            <a th:each="mapEntry : ${map}">
+                                                <span th:text="${mapEntry.key.name}"></span> = 
+                                                <span th:text="${mapEntry.value}"></span> 
+                                            </a>
+                                        </div>   
+                                    </td>
+                                    <td>Cookable</td>
+                                    <td>
+                                        <div th:each="map : ${cookedProduct.itemQuantityMap}">
+                                            <a th:each="mapEntry : ${map}">
+                                                <span th:text="${mapEntry.key.purchasePrice}*${mapEntry.value}"></span> 
+                                               
+
+                                            </a>
+                                        </div>   
+                                    </td>
+                                    <td th:text="${cookedProduct.sellingPrice}"></td>
+                                    <td>
+                                        <a th:href="@{'/finishedgoodpage/{id}'(id=${cookedProduct.id})}"> Change</a>
+                                    </td>
+                                </tr>
+
+                                <tr th:each="reSaleProduct : ${reSaleProducts}">
+
+                                    <td th:text="${reSaleProduct.id}"></td>
+                                    <td th:text="${reSaleProduct.name}"></td>
+                                    <td><img  class="cookedProductImageLink" th:src="@{${reSaleProduct.imageLink}}" th:name="${reSaleProduct.id}" width="100" height="100"/></td>
+                                    <td th:each="finishedGoodCategory : ${reSaleProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
+                                    <td>Re Sale product</td>       
+                                    <td th:text="${reSaleProduct.totalStock}"></td>
+                                    <td th:text="${reSaleProduct.purchasePrice}"></td>
+                                    <td th:text="${reSaleProduct.sellingPrice}"></td>
+                                    <td> 
+                                        <a th:href="@{'/finishedgoodpage/{id}'(id=${reSaleProduct.id})}"> Change</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <script>
+                            var wb = XLSX.utils.table_to_book(document.getElementById('mytable'), {sheet: "Sheet JS"});
+                            var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});
+                            function s2ab(s) {
+                                var buf = new ArrayBuffer(s.length);
+                                var view = new Uint8Array(buf);
+                                for (var i = 0; i < s.length; i++)
+                                    view[i] = s.charCodeAt(i) & 0xFF;
+                                return buf;
+                            }
+                            $("#button-a").click(function () {
+                                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'test.xlsx');
+                            });
+                        </script>
 
 
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <div th:each="map : ${cookedProduct.itemQuantityMap}">
-        <div th:each="mapEntry : ${map}">
-            <span th:text="${mapEntry.key}"></span> = 
-            <span th:text="${mapEntry.value}"></span> 
-        </div>
-    </div>
-</tr>
-
-<tr th:each="reSaleProduct : ${reSaleProducts}">
-
-<div th:text="${reSaleProduct.id}"></div>
-<div th:text="${reSaleProduct.name}"></div>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 
-
-<td>Kategória: </td>       
-<td th:each="finishedGoodCategory : ${reSaleProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
-
-<div th:text="${reSaleProduct.totalStock}"></div>
-<div th:text="${reSaleProduct.purchasePrice}"></div>
-</tr>
-
-
-</body>
-</html>
+                    </body>
+                    </html>

@@ -13,7 +13,10 @@ public enum Category {
     DRINK("Ital"), 
     SUSHI("Sushi"), 
     PHO("Pho"), 
-    WOK("Wok");
+    MAINCOURSE("Fő Étel"),
+    RAMEN("Rámen"),
+    DESSERT("Desszert"),
+    STARTER("Előétel");
 
     private String displayValue;
      
