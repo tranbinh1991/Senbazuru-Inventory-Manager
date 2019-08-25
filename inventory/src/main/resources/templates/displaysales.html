@@ -24,22 +24,23 @@ and open the template in the editor.
                     <body>
 
                         <h1 id="navbar"><span>Sales List</span></h1>
-                        
+
                         <div id="wrapper">
-                          <button id="button-a">Create Excel</button>  
+                            <button id="button-a">Create Excel</button>  
                             <table id="mytable" class="table table-striped">
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col">Id</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Sold products</th>
+                                        <th scope="col">Total Cost</th>
                                         <th scope="col">Total Selling Price</th>
                                     </tr>
                                 </thead>
                                 <tr th:each="sale : ${saleList}">
                                     <td th:text="${sale.id}"></td>
                                     <td th:text="${sale.localDateTime}"></td>
-                                   
+
                                     <td>
                                         <div th:each="map : ${sale.itemQuantityMap}">
                                             <a th:each="mapEntry : ${map}">
@@ -48,12 +49,13 @@ and open the template in the editor.
                                             </a>
                                         </div>   
                                     </td>
+                                    <td th:text="${sale.totalCost}"></td>
                                     <td th:text="${sale.totalSellingPrice}"></td>
-                             
+
                                 </tr>
 
                             </table>
-                            
+
                         </div>
                         <script>
                             var wb = XLSX.utils.table_to_book(document.getElementById('mytable'), {sheet: "Sheet JS"});
@@ -70,7 +72,7 @@ and open the template in the editor.
                             });
                         </script>
 
-                        
+
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
                         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>

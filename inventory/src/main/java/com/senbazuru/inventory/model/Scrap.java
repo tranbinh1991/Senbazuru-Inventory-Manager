@@ -28,27 +28,32 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Sale {
+public class Scrap {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    
-    @ManyToOne
-    private FinishedGood finishedGood;
-    
-    private BigDecimal totalSellingPrice;
-    
+
+    private BigDecimal sellingPrice;
     private BigDecimal totalCost;
-    
+    private String reason;
+
     private LocalDateTime localDateTime;
-    
-        @ElementCollection
-    @CollectionTable(name = "finished_good_quantity",
+
+    @ElementCollection
+    @CollectionTable(name = "finished_good_scrapping_quantity",
             joinColumns = {
-                @JoinColumn(name = "sale_id")})
+                @JoinColumn(name = "scrap_id")})
     @MapKeyColumn(name = "finished_good")
     @Column(name = "quantity")
-    private Map<FinishedGood, Integer> itemQuantityMap;
+    private Map<FinishedGood, Integer> finishedGoodQuantityMap;
+
+    @ElementCollection
+    @CollectionTable(name = "raw_material_scrapping_quantity",
+            joinColumns = {
+                @JoinColumn(name = "scrap_id")})
+    @MapKeyColumn(name = "raw_material")
+    @Column(name = "quantity")
+    private Map<RawMaterial, Integer> rawMaterialQuantityMap;
 }

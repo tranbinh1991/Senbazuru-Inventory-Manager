@@ -9,76 +9,19 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-        <title>Adding finished good to inventory</title>
+        <title>Scrapping</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Change Finished Good!</h1>
+
         <div th:text="${successMessage}"></div>
-        <form th:action="@{/finishedgoodpage/change/{id} (id=${finishedgood.id})}" th:object="${FinishedGoodCreationFormData}" method="POST">
+        <form th:action="@{/scrappage}" th:object="${ScrapCreationFormData}" method="POST">
+
 
 
             <script>
-                function myFunction() {
-                    var x = document.getElementById("cookable");
-                    var l = x.selectedIndex;
-                    if (l === 1) {
-                        var y = document.getElementById("purchasePrice")
-                        var z = document.getElementById("totalStock")
-                        var x = document.getElementById("minimumStock")
-                        var raw1 = document.getElementById("rawMaterial1")
-                        var raw2 = document.getElementById("rawMaterial2")
-                        var raw3 = document.getElementById("rawMaterial3")
-                        var raw4 = document.getElementById("rawMaterial4")
-                        var raw5 = document.getElementById("rawMaterial5")
-                        var raw6 = document.getElementById("rawMaterial6")
-                        var raw7 = document.getElementById("rawMaterial7")
-                        raw1.style.display = "none";
 
-                        raw2.style.display = "none";
-                        raw3.style.display = "none";
-                        raw4.style.display = "none";
-                        raw5.style.display = "none";
-                        raw6.style.display = "none";
-                        raw7.style.display = "none";
-
-
-                        y.style.display = "block";
-                        z.style.display = "block";
-                        x.style.display = "block";
-
-
-                        document.getElementById("purchasePriceInput").required = true;
-                        document.getElementById("totalStockInput").required = true;
-                        document.getElementById("minimumStockInput").required = true;
-                    } else {
-                        var y = document.getElementById("purchasePrice")
-                        var z = document.getElementById("totalStock")
-                        var x = document.getElementById("minimumStock")
-                        var raw1 = document.getElementById("rawMaterial1")
-
-                        var raw2 = document.getElementById("rawMaterial2")
-                        var raw3 = document.getElementById("rawMaterial3")
-                        var raw4 = document.getElementById("rawMaterial4")
-                        var raw5 = document.getElementById("rawMaterial5")
-                        var raw6 = document.getElementById("rawMaterial6")
-                        var raw7 = document.getElementById("rawMaterial7")
-                        raw1.style.display = "block";
-                        raw2.style.display = "block";
-                        raw3.style.display = "block";
-                        raw4.style.display = "block";
-                        raw5.style.display = "block";
-                        raw6.style.display = "block";
-                        raw7.style.display = "block";
-                        document.getElementById("purchasePriceInput").required = false;
-                        document.getElementById("totalStockInput").required = false;
-                        document.getElementById("minimumStockInput").required = false;
-                        y.style.display = "none";
-                        z.style.display = "none";
-                        x.style.display = "none";
-                    }
-                }
 
                 function displayQuantityInput1(p1, p2) {
                     var k = p2 + 'Input';
@@ -98,108 +41,43 @@ and open the template in the editor.
 
                 }
             </script>
+
+
+
+            <h1>Add Scrapping!</h1>
             <table>
+
                 <tr>
                     <td>
-                        Name of finished good:   
+                        Reason of Scrapping:   
                     </td>
                     <td>
-                        <input type="text" th:field="*{name}" id="name"  th:placeholder="${finishedgood.name}"/><br/>
+                        <input type="text" th:field="*{reason}" id="name" required/><br/>
                     </td>
                     <td>
-                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        <span th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></span>
 
 
                     </td>
                 </tr>
 
-                <tr>
-                    <td>
-                        Image Link:    
-                    </td>
-                    <td>
-                        <input type="text" th:field="*{imageLink}" id="imageLink" th:placeholder="${finishedgood.imageLink}" /><br/>
-                    </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('imageLink')}" th:errors="*{imageLink}"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Category:      
-                    </td>
-                    <td>
-                        <select th:field="*{finishedGoodCategory}" id="finishedGoodCategory">
-
-                            <option th:value="${finishedgood.finishedGoodCategory[0].category}" th:label="${finishedgood.finishedGoodCategory[0].category}" />
-                            <option th:each="finishedGoodCategory: ${finishedGoodCategorys}" th:label="${finishedGoodCategory.category}" th:value="${finishedGoodCategory.category}" />
-                        </select>
-                    </td>
-                    <td>
-                        <p th:errors="*{finishedGoodCategory}"></p>
-                    </td>
-                </tr>
                 <tr>
                     <td>                        
-                        Selling price: 
+                        Was there any revenue? If yes please input total: 
                     </td>
                     <td>
-                        <input type="number" th:placeholder="${finishedgood.sellingPrice}" th:field="*{sellingPrice}" id="sellingPrice" min="0" max="1000000" /><br/>
+                        <input type="number" th:field="*{sellingPrice}" id="sellingPrice" min="0" max="1000000"/><br/>
                     </td>
                     <td>
                         <span th:if="${#fields.hasErrors('sellingPrice')}" th:errors="*{sellingPrice}"></span>
                     </td>
                 </tr>
+                
+                </table>
+            
+            <h2>Add Raw Material Scrapping!</h2>
+            <table>
 
-                <tr>
-                    <td>
-                        Does it need to be cooked? :   
-                    </td>
-                    <td>
-                        <select th:field="*{cookable}" id="cookable" onchange="myFunction()">
-                            <option th:value="'Yes'" th:text="'Yes'"></option>
-                            <option th:value="'No'" th:text="'No'"></option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr id="purchasePrice" style="display: none">
-                    <td>                        
-                        Purchase price: 
-                    </td>
-                    <td>
-                        <input id="purchasePriceInput"  type="number" th:field="*{purchasePrice}" min="0" max="1000000" /><br/>
-                    </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('purchasePrice')}" th:errors="*{purchasePrice}"></span>
-                    </td>
-                </tr>
-
-
-
-                <tr id="totalStock" style="display: none">
-                    <td>
-                        Total stock:    
-                    </td>
-                    <td>
-                        <input id="totalStockInput"  type="number" th:field="*{totalStock}"  min="0" max="1000000" /><br/>
-                    </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('totalStock')}" th:errors="*{totalStock}"></span>
-                    </td>
-                </tr>
-
-                <tr id="minimumStock" style="display: none">
-                    <td>
-                        Minimum stock:    
-                    </td>
-                    <td>
-                        <input id="minimumStockInput"  type="number" th:field="*{minimumStock}"  min="0" max="1000000" /><br/>
-                    </td>
-                    <td>
-                        <span th:if="${#fields.hasErrors('minimumStock')}" th:errors="*{minimumStock}"></span>
-                    </td>
-                </tr>
 
                 <tr id="rawMaterial1" style="display: block" >
                     <td>
@@ -328,10 +206,147 @@ and open the template in the editor.
 
             </table>
 
-            <input type="submit" value="Submit" id="sendRawMaterialCreationForm"/>
+            <h2>Add Finished Good Scrapping!</h2>
+
+            <table>
+
+
+                <tr id="finishedGood1" style="display: block" >
+                    <td>
+                        Finished Good 1      
+                    </td>
+                    <td>
+                        <select id="finishedGood1option" th:field="*{finishedGood1}" onchange="displayQuantityInput1('finishedGood1option', 'fgquantity1')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity1" style="display: none">
+                        Quantity
+                        <input id="quantity1Input" type="number" th:field="*{finishedGood1quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="finishedGood2" style="display: block" >
+                    <td>
+                        Finished Good 2      
+                    </td>
+                    <td>
+                        <select id="finishedGood2option" th:field="*{finishedGood2}" onchange="displayQuantityInput1('finishedGood2option', 'fgquantity2')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity2" style="display: none">
+                        Quantity
+                        <input id="quantity2Input" type="number" th:field="*{finishedGood2quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="finishedGood3" style="display: block" >
+                    <td>
+                        Finished Good 3      
+                    </td>
+                    <td>
+                        <select id="finishedGood3option" th:field="*{finishedGood3}" onchange="displayQuantityInput1('finishedGood3option', 'fgquantity3')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity3" style="display: none">
+                        Quantity
+                        <input id="quantity3Input" type="number" th:field="*{finishedGood3quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="finishedGood4" style="display: block" >
+                    <td>
+                        Finished Good 4      
+                    </td>
+                    <td>
+                        <select id="finishedGood4option" th:field="*{finishedGood4}" onchange="displayQuantityInput1('finishedGood4option', 'fgquantity4')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity4" style="display: none">
+                        Quantity
+                        <input id="quantity4Input" type="number" th:field="*{finishedGood4quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="finishedGood5" style="display: block" >
+                    <td>
+                        Finished Good 5      
+                    </td>
+                    <td>
+                        <select id="finishedGood5option" th:field="*{finishedGood5}" onchange="displayQuantityInput1('finishedGood5option', 'fgquantity5')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity5" style="display: none">
+                        Quantity
+                        <input id="quantity5Input" type="number" th:field="*{finishedGood5quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="finishedGood6" style="display: block" >
+                    <td>
+                        Finished Good 6      
+                    </td>
+                    <td>
+                        <select id="finishedGood6option" th:field="*{finishedGood6}" onchange="displayQuantityInput1('finishedGood6option', 'fgquantity6')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity6" style="display: none">
+                        Quantity
+                        <input id="quantity6Input" type="number" th:field="*{finishedGood6quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+                <tr id="finishedGood7" style="display: block" >
+                    <td>
+                        Finished Good 7      
+                    </td>
+                    <td>
+                        <select id="finishedGood7option" th:field="*{finishedGood7}" onchange="displayQuantityInput1('finishedGood7option', 'fgquantity7')">
+                            <option th:value="''" th:text="' '"></option>
+                            <option th:each="finishedgood: ${finishedGoods}" th:label="${finishedgood.name}" th:value="${finishedgood.name}" />
+                        </select>
+                    </td>
+
+                    <td id="fgquantity7" style="display: none">
+                        Quantity
+                        <input id="quantity7Input" type="number" th:field="*{finishedGood7quantityneeded}" min="0" max="1000000"/><br/>
+                    </td>
+
+                </tr>
+
+
+
+
+
+
+
+            </table>
+
+            <input type="submit" value="Submit" id="ScrapCreationFormData"/>
         </form>
-        <a href="/finishedgood">Back</a>
+        <a href="/">Back</a>
     </body>
 </html>
-
-

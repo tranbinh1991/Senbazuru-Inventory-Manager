@@ -23,7 +23,7 @@ and open the template in the editor.
 
                     <body>
 
-                        <h1 id="navbar"><span>Acquisition List</span></h1>
+                        <h1 id="navbar"><span>Scrap List</span></h1>
 
                         <div id="wrapper">
                             <button id="button-a">Create Excel</button>  
@@ -32,17 +32,20 @@ and open the template in the editor.
                                     <tr>
                                         <th scope="col">Id</th>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Bought Resale Products</th>
-                                        <th scope="col">Bought Raw Materials</th>
+                                        <th scope="col">Reason</th>
+                                        <th scope="col">Scrapped Finished Goods</th>
+                                        <th scope="col">Scrapped Raw Materials</th>
                                         <th scope="col">Total Cost</th>
+                                        <th scope="col">Total Sale (if any)</th>
                                     </tr>
                                 </thead>
-                                <tr th:each="acquisition : ${acquisitionList}">
-                                    <td th:text="${acquisition.id}"></td>
-                                    <td th:text="${acquisition.localDateTime}"></td>
+                                <tr th:each="scrap : ${scrapList}">
+                                    <td th:text="${scrap.id}"></td>
+                                    <td th:text="${scrap.localDateTime}"></td>
+                                    <td th:text="${scrap.reason}"></td>
 
                                     <td>
-                                        <div th:each="map : ${acquisition.reSaleProductQuantityMap}">
+                                        <div th:each="map : ${scrap.finishedGoodQuantityMap}">
                                             <a th:each="mapEntry : ${map}">
                                                 <span th:text="${mapEntry.key.name}"></span> = 
                                                 <span th:text="${mapEntry.value}"></span> 
@@ -51,14 +54,15 @@ and open the template in the editor.
                                     </td>
 
                                     <td>
-                                        <div th:each="map : ${acquisition.rawMaterialQuantityMap}">
+                                        <div th:each="map : ${scrap.rawMaterialQuantityMap}">
                                             <a th:each="mapEntry : ${map}">
                                                 <span th:text="${mapEntry.key.name}"></span> = 
                                                 <span th:text="${mapEntry.value}"></span> 
                                             </a>
                                         </div>   
                                     </td>
-                                    <td th:text="${acquisition.totalPurchasePrice}"></td>
+                                    <td th:text="${scrap.totalCost}"></td>
+                                    <td th:text="${scrap.sellingPrice}"></td>
 
                                 </tr>
 

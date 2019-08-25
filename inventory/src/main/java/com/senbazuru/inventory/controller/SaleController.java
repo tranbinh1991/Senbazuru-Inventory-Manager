@@ -17,6 +17,7 @@ import com.senbazuru.inventory.service.RawMaterialService;
 import com.senbazuru.inventory.service.SaleService;
 import com.senbazuru.inventory.service.TableSessionService;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +62,8 @@ public class SaleController {
         sale.setItemQuantityMap(allProducts);
         sale.setLocalDateTime(LocalDateTime.now());
         sale.setTotalSellingPrice(tableSessionService.getTotal());
-        saleService.saveSale(sale);
+
+        BigDecimal totalCost = BigDecimal.ZERO;
 
         for (Map.Entry<FinishedGood, Integer> entry : allProducts.entrySet()) {
             FinishedGood key = entry.getKey();
@@ -71,6 +73,7 @@ public class SaleController {
                 ReSaleProduct reSaleProduct = (ReSaleProduct) key;
                 reSaleProduct.setTotalStock(reSaleProduct.getTotalStock() - value);
                 finishedGoodService.saveFinishedGood(reSaleProduct);
+                totalCost = totalCost.add(reSaleProduct.getPurchasePrice().multiply(BigDecimal.valueOf(value)));
 
                 if (reSaleProduct.getTotalStock() <= reSaleProduct.getMinimumStock()) {
                     try {
@@ -88,7 +91,7 @@ public class SaleController {
                     Integer value1 = entry1.getValue();
                     key1.setTotalStock(key1.getTotalStock() - (value * value1));
                     materialService.saveRawMaterial(key1);
-
+                    totalCost = totalCost.add(key1.getPurchasePrice().multiply(BigDecimal.valueOf(value1).multiply(BigDecimal.valueOf(value))));
                     if (key1.getTotalStock() <= key1.getMinimumStock()) {
                         try {
                             mailSendingService.sendMail(key1.getName(), key1.getTotalStock());
@@ -104,8 +107,11 @@ public class SaleController {
             }
 
         }
+        sale.setTotalCost(totalCost);
 
-      clearProductsinCart();
+        saleService.saveSale(sale);
+
+        clearProductsinCart();
 
         return "tables.html";
     }
@@ -124,8 +130,6 @@ public class SaleController {
     public String displaySales(Model model) {
 
         model.addAttribute("saleList", saleService.findAll());
-        System.out.println(saleService.findAll());
-
         return "displaysales.html";
     }
 
