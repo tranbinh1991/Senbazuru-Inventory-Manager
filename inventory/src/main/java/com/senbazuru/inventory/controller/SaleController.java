@@ -16,6 +16,8 @@ import com.senbazuru.inventory.service.MailSendingService;
 import com.senbazuru.inventory.service.RawMaterialService;
 import com.senbazuru.inventory.service.SaleService;
 import com.senbazuru.inventory.service.TableSessionService;
+import com.senbazuru.inventory.viewmodel.DiscountCreationFormData;
+import com.senbazuru.inventory.viewmodel.RawMaterialCreationFormData;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -29,7 +31,10 @@ import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -116,14 +121,29 @@ public class SaleController {
         return "tables.html";
     }
 
-    @RequestMapping("/recipe")
-    public String printRecipe(Model model) {
+    @RequestMapping(value = "/recipe", method = RequestMethod.POST)
+    public String printRecipe(Model model,
+            @ModelAttribute("DiscountCreationFormData") DiscountCreationFormData discountCreationFormData, BindingResult bindingResult) {
 
-        model.addAttribute("sale", tableSessionService.getProductsInCart());
-        model.addAttribute("salePrice", tableSessionService.getTotal());
+        if (!bindingResult.hasErrors()) {
+            
+            BigDecimal finalPrice = tableSessionService.getTotal();
+            
+            
+            
+            if (!discountCreationFormData.getPercentage().equals("")) {
+                double discount =1- Double.parseDouble(discountCreationFormData.getPercentage())/100;
+                    finalPrice = finalPrice.multiply(BigDecimal.valueOf(discount));
+                 model.addAttribute("discount", Integer.parseInt(discountCreationFormData.getPercentage())+" % Discount");
+            }
+            
+           
+            model.addAttribute("sale", tableSessionService.getProductsInCart());
+            model.addAttribute("salePrice", finalPrice);
 
+        }
+        
         return "recipe.html";
-
     }
 
     @RequestMapping("/displaysales")

@@ -232,69 +232,101 @@
 
         </div>
 
-    </section>-->
-    <section class="container content-section">
-        <h2 class="section-header">ORDERED ITEMS</h2>
-        <div class="cart-row">
-            <span class="cart-item cart-header cart-column">ITEM</span>
-            <span class="cart-price cart-header cart-column">PRICE</span>
-            <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-        </div>
-        <div class="cart-row" th:each="product : ${products.entrySet()}">
 
-            <span th:text="${product.getKey().name}" th:href="@{'/product/' + ${product.getKey().id}}" class="cart-item cart-header cart-column">Title</span>
-            <span th:inline="text" class="cart-price cart-header cart-column">[[${product.getKey().sellingPrice}]] Huf</span>
-            <span th:inline="text" class="cart-quantity cart-header cart-column">[[${product.getValue()}]]
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <section class="container content-section">
+            <h2 class="section-header">ORDERED ITEMS</h2>
+            <div class="cart-row">
+                <span class="cart-item cart-header cart-column">ITEM</span>
+                <span class="cart-price cart-header cart-column">PRICE</span>
+                <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+            </div>
+            <div class="cart-row" th:each="product : ${products.entrySet()}">
 
-                <a th:href="@{'/shoppingCart/removeProduct/{id}'(id=${product.getKey().id})}">
-                    <button  type="button" class="btn btn-primary" th:text="Remove">Remove</button>
-                </a>
-            </span>
+                <span th:text="${product.getKey().name}" th:href="@{'/product/' + ${product.getKey().id}}" class="cart-item cart-header cart-column">Title</span>
+                <span th:inline="text" class="cart-price cart-header cart-column">[[${product.getKey().sellingPrice}]] Huf</span>
+                <span th:inline="text" class="cart-quantity cart-header cart-column">[[${product.getValue()}]]
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+                    <a th:href="@{'/shoppingCart/removeProduct/{id}'(id=${product.getKey().id})}">
+                        <button  type="button" class="btn btn-primary" th:text="Remove">Remove</button>
+                    </a>
+                </span>
 
 
-        </div>
+            </div>
 
-        <div class="cart-total">
-            <strong class="cart-total-title">Total</strong>
-            <span class="cart-total-price"> Total: [[${total}]]</span>
-        </div>
 
-        <a th:href="@{'/succesfulSale'}" >
-            <button  class="btn btn-primary btn-purchase" type="button">Close table orders</button>
-        </a>
-        
-        <a th:href="@{'/recipe'}" th:target="_blank">
-            <button  class="btn btn-primary btn-purchase" type="button">Create recipe</button>
-        </a>
-        
-        
-        
-
-    </section>
+            <form th:action="@{/recipe}" th:object="${DiscountCreationFormData}" method="POST" th:target="_blank">
 
 
 
-    <script>
-        function myFunction() {
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("myUL");
-            li = ul.getElementsByClassName("shop-item");
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
-                txtValue = a.textContent || a.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
+                <div class="cart-total">
+                    <strong class="cart-total-title">Discount (%)</strong>
+                    <input class="cart-total-price" type="number" th:field="*{percentage}" id="discountPercentage" min="0" max="100" onchange="calculatePrice()" onkeyup="calculatePrice()"/><br/>
+                    <span th:if="${#fields.hasErrors('percentage')}" th:errors="*{percentage}"></span>
+                </div>
+
+                <div class="cart-total">
+                    <strong class="cart-total-title">Total</strong>
+                    <span id="totalPrice" class="cart-total-price"  th:text="${total}"></span>
+                </div>
+
+                <input  class="btn btn-primary btn-purchase" type="submit" value="Create Recipe" id="sendDiscountCreationFormData"/>
+                
+
+            </form>
+            
+                               <a th:href="@{'/succesfulSale'}" >
+                <button  class="btn btn-primary btn-purchase" type="submit">Close table orders</button>
+            </a>
+
+         
+            
+
+
+
+
+
+
+        </section>
+
+
+
+        <script>
+            function myFunction() {
+                var input, filter, ul, li, a, i, txtValue;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                ul = document.getElementById("myUL");
+                li = ul.getElementsByClassName("shop-item");
+                for (i = 0; i < li.length; i++) {
+                    a = li[i].getElementsByTagName("a")[0];
+                    txtValue = a.textContent || a.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
+                    }
                 }
             }
-        }
-    </script>
-    
+        </script>
+
+         <script type="text/javascript" th:inline="javascript">
+            function calculatePrice() {
+
+                var price = [[${total}]];
+                var discountPercentage = document.getElementById("discountPercentage").value;
+                var newPrice = price * (1 - (discountPercentage / 100));
+                var formattedPrice = parseFloat(newPrice).toFixed(2);
+                document.getElementById("totalPrice").innerHTML = formattedPrice;
 
 
-</body>
+            }
+        </script>
+        
+
+
+
+
+    </body>
 </html>

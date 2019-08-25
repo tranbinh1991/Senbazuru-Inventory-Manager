@@ -41,6 +41,7 @@ public class Sale {
     private BigDecimal totalSellingPrice;
     
     private BigDecimal totalCost;
+    private Double discount;
     
     private LocalDateTime localDateTime;
     

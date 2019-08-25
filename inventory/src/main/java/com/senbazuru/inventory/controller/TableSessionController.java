@@ -8,6 +8,7 @@ package com.senbazuru.inventory.controller;
 import com.senbazuru.inventory.model.FinishedGood;
 import com.senbazuru.inventory.service.FinishedGoodService;
 import com.senbazuru.inventory.service.TableSessionService;
+import com.senbazuru.inventory.viewmodel.DiscountCreationFormData;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -76,10 +77,11 @@ public class TableSessionController {
         modelAndView.addObject("ramenList", ramenList);
         modelAndView.addObject("dessertList", dessertList);
         modelAndView.addObject("starterList", starterList);
+        modelAndView.addObject("DiscountCreationFormData", new DiscountCreationFormData());
 
         modelAndView.addObject("finishedGoodList", productService.findAll());
         modelAndView.addObject("products", tableSessionService.getProductsInCart());
-        modelAndView.addObject("total", tableSessionService.getTotal().toString());
+        modelAndView.addObject("total", tableSessionService.getTotal());
         modelAndView.addObject("tableId", tableId);
         return modelAndView;
     }
