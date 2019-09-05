@@ -4,108 +4,174 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html>
     <head>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
         <script src="/js/xlsx.full.min.js"></script>
         <script src="/js/FileSaver.min.js"></script>
-        <script
-        src="https://code.jquery.com/jquery-2.1.4.js"></script>
-        <title>Nyers Anyagok</title>
+
+        <title>Finished Goods</title>
         <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-                    </head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
 
 
-                    <body>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-                        <h1 id="navbar"><span>Nyers Anyagok</span></h1>
-                        <div th:text="${successMessage}"></div>
-                        <div id="wrapper">
-                            <button id="button-a">Create Excel</button>
-                            <table id="mytable" class="table table-striped">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Ingredients</th>
-                                        <th scope="col">Total Stock</th>
-                                        <th scope="col">Purchase Price</th>
-                                        <th scope="col">Selling Price</th>
-                                    </tr>
-                                </thead>
-                                <tr th:each="cookedProduct : ${cookedProducts}">
-                                    <td th:text="${cookedProduct.id}"></td>
-                                    <td th:text="${cookedProduct.name}"></td>
-                                    <td><img  class="cookedProductImageLink" th:src="@{${cookedProduct.imageLink}}" th:name="${cookedProduct.id}" width="100" height="100"/></td>
-                                    <td th:each="finishedGoodCategory : ${cookedProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}"></td>
-                                    <td>
-                                        <div th:each="map : ${cookedProduct.itemQuantityMap}">
-                                            <a th:each="mapEntry : ${map}">
-                                                <span th:text="${mapEntry.key.name}"></span> = 
-                                                <span th:text="${mapEntry.value}"></span> 
-                                            </a>
-                                        </div>   
-                                    </td>
-                                    <td>Cookable</td>
-                                    <td>
-                                        <div th:each="map : ${cookedProduct.itemQuantityMap}">
-                                            <a th:each="mapEntry : ${map}">
-                                                <span th:text="${mapEntry.key.purchasePrice}*${mapEntry.value}"></span> 
-                                               
-
-                                            </a>
-                                        </div>   
-                                    </td>
-                                    <td th:text="${cookedProduct.sellingPrice}"></td>
-                                    <td>
-                                        <a th:href="@{'/finishedgoodpage/{id}'(id=${cookedProduct.id})}"> Change</a>
-                                    </td>
-                                </tr>
-
-                                <tr th:each="reSaleProduct : ${reSaleProducts}">
-
-                                    <td th:text="${reSaleProduct.id}"></td>
-                                    <td th:text="${reSaleProduct.name}"></td>
-                                    <td><img  class="cookedProductImageLink" th:src="@{${reSaleProduct.imageLink}}" th:name="${reSaleProduct.id}" width="100" height="100"/></td>
-                                    <td th:each="finishedGoodCategory : ${reSaleProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
-                                    <td>Re Sale product</td>       
-                                    <td th:text="${reSaleProduct.totalStock}"></td>
-                                    <td th:text="${reSaleProduct.purchasePrice}"></td>
-                                    <td th:text="${reSaleProduct.sellingPrice}"></td>
-                                    <td> 
-                                        <a th:href="@{'/finishedgoodpage/{id}'(id=${reSaleProduct.id})}"> Change</a>
-                                    </td>
-                                </tr>
-                            </table>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Open Sales/Table
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/tables"> Open Table </a>
+                            <a class="dropdown-item" href="/displaysales">Display Sales</a>
 
                         </div>
-                        <script>
-                            var wb = XLSX.utils.table_to_book(document.getElementById('mytable'), {sheet: "Sheet JS"});
-                            var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});
-                            function s2ab(s) {
-                                var buf = new ArrayBuffer(s.length);
-                                var view = new Uint8Array(buf);
-                                for (var i = 0; i < s.length; i++)
-                                    view[i] = s.charCodeAt(i) & 0xFF;
-                                return buf;
-                            }
-                            $("#button-a").click(function () {
-                                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'test.xlsx');
-                            });
-                        </script>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Finished Good
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/finishedgood"> Display Finished Goods </a>
+                            <a class="dropdown-item" href="/finishedgoodadder">Add Finished Good</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Raw Material
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/rawmaterial"> Display Raw Materials </a>
+                            <a class="dropdown-item" href="/rawmaterialadder">Add New Raw Material</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Acquisition
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/displayacquisition"> Display Acquisitions </a>
+                            <a class="dropdown-item" href="/acquisitionpage">Add Acquisition</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Scrapping
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/displayscrap"> Display Scraps </a>
+                            <a class="dropdown-item" href="/scrappage">Scrap Goods</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <h1 id="navbar"><span>Finished Goods</span></h1>
+        <div th:text="${successMessage}"></div>
+        <div id="wrapper">
+            <button id="button-a">Create Excel</button>
+            <table id="mytable" class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Ingredients</th>
+                        <th scope="col">Total Stock</th>
+                        <th scope="col">Purchase Price</th>
+                        <th scope="col">Selling Price</th>
+                    </tr>
+                </thead>
+                <tr th:each="cookedProduct : ${cookedProducts}">
+                    <td th:text="${cookedProduct.id}"></td>
+                    <td th:text="${cookedProduct.name}"></td>
+                    <td><img  class="cookedProductImageLink" th:src="@{${cookedProduct.imageLink}}" th:name="${cookedProduct.id}" width="100" height="100"/></td>
+                    <td th:each="finishedGoodCategory : ${cookedProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}"></td>
+                    <td>
+                        <div th:each="map : ${cookedProduct.itemQuantityMap}">
+                            <a th:each="mapEntry : ${map}">
+                                <span th:text="${mapEntry.key.name}"></span> = 
+                                <span th:text="${mapEntry.value}"></span> 
+                            </a>
+                        </div>   
+                    </td>
+                    <td>Cookable</td>
+                    <td>
+                        <div th:each="map : ${cookedProduct.itemQuantityMap}">
+                            <a th:each="mapEntry : ${map}">
+                                <span th:text="${mapEntry.key.purchasePrice}*${mapEntry.value}"></span> 
 
 
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                            </a>
+                        </div>   
+                    </td>
+                    <td th:text="${cookedProduct.sellingPrice}"></td>
+                    <td>
+                        <a th:href="@{'/finishedgoodpage/{id}'(id=${cookedProduct.id})}"> Change</a>
+                    </td>
+                </tr>
 
-                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                <tr th:each="reSaleProduct : ${reSaleProducts}">
+
+                    <td th:text="${reSaleProduct.id}"></td>
+                    <td th:text="${reSaleProduct.name}"></td>
+                    <td><img  class="cookedProductImageLink" th:src="@{${reSaleProduct.imageLink}}" th:name="${reSaleProduct.id}" width="100" height="100"/></td>
+                    <td th:each="finishedGoodCategory : ${reSaleProduct.finishedGoodCategory}"th:text="${finishedGoodCategory.category.displayValue}" ></td>
+                    <td>Re Sale product</td>       
+                    <td th:text="${reSaleProduct.totalStock}"></td>
+                    <td th:text="${reSaleProduct.purchasePrice}"></td>
+                    <td th:text="${reSaleProduct.sellingPrice}"></td>
+                    <td> 
+                        <a th:href="@{'/finishedgoodpage/{id}'(id=${reSaleProduct.id})}"> Change</a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <script>
+            var wb = XLSX.utils.table_to_book(document.getElementById('mytable'), {sheet: "Sheet JS"});
+            var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'binary'});
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++)
+                    view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+            $("#button-a").click(function () {
+                saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'test.xlsx');
+            });
+        </script>
 
 
-                    </body>
-                    </html>
+
+
+
+    </body>
+</html>

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <title>Senbazuru Order</title>
         <meta name="description" content="This is the description">
         <link rel="stylesheet" href="/css/styles.css" />
@@ -20,6 +24,73 @@
         </style>
     </head>
     <body>
+         <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Open Sales/Table
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/tables"> Open Table </a>
+                            <a class="dropdown-item" href="/displaysales">Display Sales</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Finished Good
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/finishedgood"> Display Finished Goods </a>
+                            <a class="dropdown-item" href="/finishedgoodadder">Add Finished Good</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Raw Material
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/rawmaterial"> Display Raw Materials </a>
+                            <a class="dropdown-item" href="/rawmaterialadder">Add New Raw Material</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Acquisition
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/displayacquisition"> Display Acquisitions </a>
+                            <a class="dropdown-item" href="/acquisitionpage">Add Acquisition</a>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Scrapping
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/displayscrap"> Display Scraps </a>
+                            <a class="dropdown-item" href="/scrappage">Scrap Goods</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <header background-color="#776F6D">
 
         </header>
@@ -256,7 +327,7 @@
             </div>
 
 
-            <form th:action="@{/recipe}" th:object="${DiscountCreationFormData}" method="POST" th:target="_blank">
+            <form action="#" data-th-action="@{/sale}" th:object="${DiscountCreationFormData}" method="POST" th:target="_blank">
 
 
 
@@ -271,21 +342,11 @@
                     <span id="totalPrice" class="cart-total-price"  th:text="${total}"></span>
                 </div>
 
-                <input  class="btn btn-primary btn-purchase" type="submit" value="Create Recipe" id="sendDiscountCreationFormData"/>
-                
+                <input  class="btn btn-primary btn-purchase" th:name="recipe" type="submit" th:value="'Create recipe'" id="sendDiscountCreationFormData"/>
+                <input  class="btn btn-primary btn-purchase" th:name="succesfulSale" type="submit" th:value="'Close Table Orders'" id="sendDiscountCreationFormData"/>
 
             </form>
             
-                               <a th:href="@{'/succesfulSale'}" >
-                <button  class="btn btn-primary btn-purchase" type="submit">Close table orders</button>
-            </a>
-
-         
-            
-
-
-
-
 
 
         </section>

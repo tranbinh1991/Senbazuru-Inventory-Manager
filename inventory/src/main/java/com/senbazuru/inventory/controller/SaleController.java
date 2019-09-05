@@ -58,15 +58,25 @@ public class SaleController {
     @Autowired
     private MailSendingService mailSendingService;
 
-    @RequestMapping("/succesfulSale")
-    public String succesfulSale(Model model) {
+    @RequestMapping(value = "/sale", params = "succesfulSale", method = RequestMethod.POST)
+
+    public String succesfulSale(Model model,
+            @ModelAttribute("DiscountCreationFormData") DiscountCreationFormData discountCreationFormData, BindingResult bindingResult) {
         Sale sale = new Sale();
         Map<FinishedGood, Integer> allProducts = new HashMap();
         allProducts = tableSessionService.getProductsInCart();
+        BigDecimal finalPrice = tableSessionService.getTotal();
+
+        if (!discountCreationFormData.getPercentage().equals("")) {
+            double discount = 1 - Double.parseDouble(discountCreationFormData.getPercentage()) / 100;
+            finalPrice = finalPrice.multiply(BigDecimal.valueOf(discount));
+            sale.setDiscount(discount);
+            
+        }
 
         sale.setItemQuantityMap(allProducts);
         sale.setLocalDateTime(LocalDateTime.now());
-        sale.setTotalSellingPrice(tableSessionService.getTotal());
+        sale.setTotalSellingPrice(finalPrice);
 
         BigDecimal totalCost = BigDecimal.ZERO;
 
@@ -121,28 +131,25 @@ public class SaleController {
         return "tables.html";
     }
 
-    @RequestMapping(value = "/recipe", method = RequestMethod.POST)
+    @RequestMapping(value = "/sale", params = "recipe", method = RequestMethod.POST)
     public String printRecipe(Model model,
             @ModelAttribute("DiscountCreationFormData") DiscountCreationFormData discountCreationFormData, BindingResult bindingResult) {
 
         if (!bindingResult.hasErrors()) {
-            
+
             BigDecimal finalPrice = tableSessionService.getTotal();
-            
-            
-            
+
             if (!discountCreationFormData.getPercentage().equals("")) {
-                double discount =1- Double.parseDouble(discountCreationFormData.getPercentage())/100;
-                    finalPrice = finalPrice.multiply(BigDecimal.valueOf(discount));
-                 model.addAttribute("discount", Integer.parseInt(discountCreationFormData.getPercentage())+" % Discount");
+                double discount = 1 - Double.parseDouble(discountCreationFormData.getPercentage()) / 100;
+                finalPrice = finalPrice.multiply(BigDecimal.valueOf(discount));
+                model.addAttribute("discount", Integer.parseInt(discountCreationFormData.getPercentage()) + " % Discount");
             }
-            
-           
+
             model.addAttribute("sale", tableSessionService.getProductsInCart());
             model.addAttribute("salePrice", finalPrice);
 
         }
-        
+
         return "recipe.html";
     }
 
